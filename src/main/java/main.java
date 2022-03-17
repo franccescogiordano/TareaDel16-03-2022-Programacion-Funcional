@@ -94,7 +94,7 @@ public class main {
             public boolean test(Factura t) {
                 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
                 // System.out.println("iteracion ");
-                return t.getCantidadProducto() == cantidad;
+                return t.getCodigo() == codigo;
             }
         };
         Predicate<Factura> predicadocantidadmayor = new Predicate<Factura>() {
@@ -136,7 +136,7 @@ public class main {
                     "3 - buscar por fecha anterior (con predicado) \n" +
                     "4 - buscar por cantidad mayor (con predicado) \n" +
                     "5 - buscar por cantidad menor (con predicado) \n" +
-                    "6 - buscar por codigo (con predicado)" +
+                    "6 - buscar por codigo (con predicado) \n" +
                     "7 - buscar por cantidad exacta (sin predicado) \n" +
                     "8 - buscar por fecha posterior (sin predicado) \n" +
                     "9 - buscar por fecha anterior (sin predicado) \n" +
@@ -145,7 +145,7 @@ public class main {
                     "12 - buscar por codigo (sin predicado)");
             System.out.print("OPCION: ");
             opcion = sc.nextInt();
-
+            Scanner sc2 = new Scanner(System.in);
             switch (opcion) {
                 case 1:
                     System.out.println("ingrese cantidad de productos");
@@ -155,10 +155,8 @@ public class main {
                     for (Factura fac : facturaFiltro) {
                         System.out.println("Descripcion producto:" + fac.getDescripcion() + " cantidad:" + fac.getCantidadProducto());
                     }
-
                     break;
                 case 2:
-                    Scanner sc2 = new Scanner(System.in);
                     System.out.println("ingrese fecha los productos posteriores a la misma se mostraran");
                     System.out.print("Fecha (Dia/Mes/año) ej : 12/10/2020.. :");
                     fechaenstring = sc2.nextLine();
@@ -172,10 +170,10 @@ public class main {
 
                     break;
                 case 3:
-                    Scanner sc3 = new Scanner(System.in);
+                    sc2= new Scanner(System.in);
                     System.out.println("ingrese fecha los productos anteriores a la misma se mostraran");
                     System.out.print("Fecha (Dia/Mes/año) ej : 12/10/2020.. :");
-                    fechaenstring = sc3.nextLine();
+                    fechaenstring = sc2.nextLine();
                     System.out.println(fechaenstring + " fechaenstring es");
                     fechafecha = formatedate.parse(fechaenstring);
                     List<Factura> facturaFiltro4 = lista.stream()
@@ -186,7 +184,7 @@ public class main {
                     break;
                 case 4:
                     System.out.println("ingrese una cantidad cantidad para buscar productos con cantidad mayor a la ingresada");
-                    cantidad = sc.nextInt();
+                    cantidad = sc2.nextInt();
                     List<Factura> facturaFiltro22 = lista.stream()
                             .filter(predicadocantidadmayor).collect(Collectors.toList());
                     for (Factura fac : facturaFiltro22) {
@@ -194,10 +192,8 @@ public class main {
                     }
                     break;
                 case 5:
-                    System.out.println("ingrese cantidad de productos");
-                    cantidad = sc.nextInt();
                     System.out.println("ingrese una cantidad para buscar productos con cantidad menor a la ingresada");
-                    cantidad = sc.nextInt();
+                    cantidad = sc2.nextInt();
                     List<Factura> facturaFiltro38 = lista.stream()
                             .filter(predicadocantidadmenor).collect(Collectors.toList());
                     for (Factura fac : facturaFiltro38) {
@@ -205,10 +201,8 @@ public class main {
                     }
                     break;
                 case 6:
-                    System.out.println("ingrese cantidad de productos");
-                    cantidad = sc.nextInt();
                     System.out.println("ingrese un codigo para buscar productos con el mismo codigo");
-                    cantidad = sc.nextInt();
+                    codigo = sc2.nextInt();
                     List<Factura> facturaFiltro35 = lista.stream()
                             .filter(predicadocodigo).collect(Collectors.toList());
                     for (Factura fac : facturaFiltro35) {
@@ -216,7 +210,6 @@ public class main {
                     }
                     break;
                 case 7:
-
 
                     System.out.println("ingrese cantidad de productos");
                     cantidad = sc.nextInt();
@@ -229,6 +222,7 @@ public class main {
                 case 8:
                     sc2 = new Scanner(System.in);
                     System.out.println("ingrese fecha, los productos posteriores a la misma se mostraran");
+                    System.out.print("Fecha (Dia/Mes/año) ej : 12/10/2020.. :");
                     fechaenstring = sc2.nextLine();
                     System.out.println(fechaenstring + " fechaenstring es");
                     fechafecha = formatedate.parse(fechaenstring);
@@ -254,20 +248,32 @@ public class main {
                     }
                     break;
                 case 10:
+                    System.out.println("ingrese una cantidad cantidad para buscar productos con cantidad mayor a la ingresada");
+                    cantidad = sc2.nextInt();
                     facturaFiltro = lista.stream()
-                            .filter(elemento -> elemento.getCantidadProducto() < cantidad).collect(Collectors.toList());
-
+                            .filter(elemento -> elemento.getCantidadProducto() > cantidad).collect(Collectors.toList());
+                    for (Factura o : facturaFiltro) {
+                        System.out.println("la factura es del producto " + o.getDescripcion() + " y su cantidad es " + o.getCantidadProducto());
+                    }
 
                     break;
                 case 11:
+                    System.out.println("ingrese una cantidad cantidad para buscar productos con cantidad menor a la ingresada");
+                    cantidad = sc2.nextInt();
                     facturaFiltro = lista.stream()
-                            .filter(elemento -> elemento.getCantidadProducto() > cantidad).collect(Collectors.toList());
-
+                            .filter(elemento -> elemento.getCantidadProducto() < cantidad).collect(Collectors.toList());
+                    for (Factura o : facturaFiltro) {
+                        System.out.println("la factura es del producto " + o.getDescripcion() + " y su cantidad es " + o.getCantidadProducto());
+                    }
                     break;
                 case 12:
+                    System.out.println("ingrese el codigo de producto o productos");
+                    codigo = sc2.nextInt();
                     facturaFiltro = lista.stream()
-                            .filter(elemento -> elemento.getCantidadProducto() == codigo).collect(Collectors.toList());
-
+                            .filter(elemento -> elemento.getCodigo() == codigo).collect(Collectors.toList());
+                    for (Factura o : facturaFiltro) {
+                        System.out.println("la factura es del producto " + o.getDescripcion() + " y su codigo es " + o.getCodigo());
+                    }
                     break;
                 case 0:
                     break;
